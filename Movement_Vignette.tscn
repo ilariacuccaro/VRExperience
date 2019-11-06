@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Movement_Vignette.gd" type="Script" id=1]
+[ext_resource path="res://vignette.png" type="Texture" id=2]
+
+[node name="ColorRect" type="ColorRect"]
+margin_right = 500.0
+margin_bottom = 500.0
+script = ExtResource( 1 )
+
+[node name="vignette" type="Sprite" parent="."]
+position = Vector2( 256.293, 257.314 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 2 )
