@@ -41,7 +41,10 @@ func _physics_process(delta):
                 if teleport_raycast.get_collision_normal().y >= 0.85: #verifichiamo se il valore y restituito da Raycast è >0.85
                     teleport_pos = teleport_raycast.get_collision_point() #impostiamo il punto di collisione e spostiamo la mesh di teletrasporto su teleport_pos
                     teleport_mesh.global_transform.origin = teleport_pos
-
+            elif teleport_raycast.get_collider() is KinematicBody:
+                if "MeshPlatformer":
+	                $MeshPlatformer1.visible = false
+	                $MeshPlatformer2.visible = true
 
     # Controller velocity
     # --------------------
@@ -111,7 +114,6 @@ func button_pressed(button_index):
                 teleport_mesh.visible = true
                 teleport_raycast.visible = true
 
-    # If the grab button is pressed...
    if button_index == 2: #se premiamo il pulsante per afferrare/lasciare  un oggetto
         if teleport_button_down: # se il giocatore sta tentando di teletrasportarsi
             return
@@ -203,3 +205,12 @@ func button_released(button_index):
             teleport_mesh.visible = false
             teleport_raycast.visible = false
             teleport_pos = null
+			
+func sleep_area_entered(body):
+    if "can_sleep" in body:
+        body.can_sleep = false
+        body.sleeping = false
+
+func sleep_area_exited(body):
+    if "can_sleep" in body:
+        body.can_sleep = true
