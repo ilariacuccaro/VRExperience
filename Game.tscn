@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
-[ext_resource path="res://quadri-su-tela-senza-soluzione-di-sfondo-pietra.jpg" type="Texture" id=2]
+[ext_resource path="res://texture_pietra.jpg" type="Texture" id=2]
 [ext_resource path="res://Right_Controller.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Left_Controller.tscn" type="PackedScene" id=4]
 [ext_resource path="res://default_env.tres" type="Environment" id=5]
