@@ -41,10 +41,10 @@ func _physics_process(delta):
                 if teleport_raycast.get_collision_normal().y >= 0.85: #verifichiamo se il valore y restituito da Raycast è >0.85
                     teleport_pos = teleport_raycast.get_collision_point() #impostiamo il punto di collisione e spostiamo la mesh di teletrasporto su teleport_pos
                     teleport_mesh.global_transform.origin = teleport_pos
-            elif teleport_raycast.get_collider() is KinematicBody:
-                if "MeshPlatformer":
+            elif teleport_raycast.get_collider() is KinematicBody: 
+                if "MeshPlatformer": #se entriamo in contatto con la piattaforma
 	                $MeshPlatformer1.visible = false
-	                $MeshPlatformer2.visible = true
+	                $MeshPlatformer2.visible = true #facciamo partire l'animazione
 
     # Controller velocity
     # --------------------

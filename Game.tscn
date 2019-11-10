@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://texture_pietra.jpg" type="Texture" id=2]
-[ext_resource path="res://Right_Controller.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Left_Controller.tscn" type="PackedScene" id=4]
-[ext_resource path="res://default_env.tres" type="Environment" id=5]
+[ext_resource path="res://Bridge2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Right_Controller.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Left_Controller.tscn" type="PackedScene" id=5]
+[ext_resource path="res://default_env.tres" type="Environment" id=6]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.607843, 0.933333, 0.623529, 1 )
@@ -192,31 +193,38 @@ tracks/1/keys = {
 "values": [ Vector3( -18.3, 2.06, 0 ), Vector3( -18.3, 4.6, 0 ), Vector3( -18.3, 6.6, 0 ), Vector3( -18.3, 8.6, 0 ), Vector3( -18.3, 10.6, 0 ) ]
 }
 
+[sub_resource type="CubeMesh" id=9]
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.458824, 0.85098, 0.494118, 1 )
+
+[sub_resource type="BoxShape" id=11]
+
 [node name="Game" type="Spatial"]
 transform = Transform( 1.14257, 0, 0, 0, 1, 0, 0, 0, 1.20062, 0, 0, 0 )
 script = ExtResource( 1 )
 
 [node name="World" type="Spatial" parent="."]
 
-[node name="Floor" type="MeshInstance" parent="World"]
+[node name="Floor1" type="MeshInstance" parent="World"]
 editor/display_folded = true
 transform = Transform( 31.6745, 0, 0, 0, 1, 0, 0, 0, 31.8948, 0, 1, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="StaticBody" type="StaticBody" parent="World/Floor"]
+[node name="StaticBody" type="StaticBody" parent="World/Floor1"]
 
-[node name="CollisionShape" type="CollisionShape" parent="World/Floor/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="World/Floor1/StaticBody"]
 shape = SubResource( 3 )
 
 [node name="MeshPlatformer1" type="MeshInstance" parent="World"]
-transform = Transform( 0.97, 0, 0, 0, 0.1, 0, 0, 0, 0.91, -18.3, 2.06, 0 )
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 0.1, 0, 0, 0, 1, -18.3, 2.06, 0 )
 mesh = SubResource( 6 )
 material/0 = null
 
 [node name="Platformer" type="KinematicBody" parent="World/MeshPlatformer1"]
-editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.3, 10.6, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.161007, 0 )
 input_capture_on_drag = true
 
 [node name="CollisionShape" type="CollisionShape" parent="World/MeshPlatformer1/Platformer"]
@@ -224,34 +232,60 @@ shape = SubResource( 7 )
 
 [node name="MeshPlatformer2" type="MeshInstance" parent="World"]
 editor/display_folded = true
-transform = Transform( 0.97, 0, 0, 0, 0.1, 0, 0, 0, 0.91, -18.3, 2.06, 0 )
+transform = Transform( 1, 0, 0, 0, 0.1, 0, 0, 0, 1, -18.3, 10.6, 0 )
 visible = false
 mesh = SubResource( 6 )
 material/0 = null
 
 [node name="Platformer" type="KinematicBody" parent="World/MeshPlatformer2"]
-editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.3, 10.6, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0 )
 input_capture_on_drag = true
 
 [node name="CollisionShape" type="CollisionShape" parent="World/MeshPlatformer2/Platformer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.67472, 0 )
 shape = SubResource( 7 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="World/MeshPlatformer2"]
 autoplay = "AnimPlatformer"
 anims/AnimPlatformer = SubResource( 8 )
 
+[node name="Floor2" type="MeshInstance" parent="World"]
+editor/display_folded = true
+transform = Transform( 7, 0, 0, 0, 0.3, 0, 0, 0, 5, -18.3947, 10.4738, -6.11337 )
+mesh = SubResource( 9 )
+material/0 = SubResource( 10 )
+
+[node name="StaticBody" type="StaticBody" parent="World/Floor2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Floor2/StaticBody"]
+shape = SubResource( 11 )
+
+[node name="Floor3" type="MeshInstance" parent="World"]
+editor/display_folded = true
+transform = Transform( 8, 0, 0, 0, 0.3, 0, 0, 0, 8, 20.3945, 10.4738, -6.11337 )
+mesh = SubResource( 9 )
+material/0 = SubResource( 10 )
+
+[node name="StaticBody" type="StaticBody" parent="World/Floor3"]
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Floor3/StaticBody"]
+shape = SubResource( 11 )
+
+[node name="Bridge" parent="World" instance=ExtResource( 3 )]
+transform = Transform( 1.13923, 0, 0, 0, 0.768141, 0, 0, 0, 0.758138, 12.3969, 11.2582, -5.0647 )
+
 [node name="ARVROrigin" type="ARVROrigin" parent="."]
+editor/display_folded = true
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0, 2.961, 0 )
 
 [node name="Player_Camera" type="ARVRCamera" parent="ARVROrigin"]
 transform = Transform( 0.87522, 0, 0, 0, 1, 0, 0, 0, 0.832903, 0, 1.7, 0 )
 current = true
 
-[node name="Right_Controller" parent="ARVROrigin" instance=ExtResource( 3 )]
+[node name="Right_Controller" parent="ARVROrigin" instance=ExtResource( 4 )]
 transform = Transform( -9.17688e-010, 0, -0.0190549, 0, 0.02, 0, 0.0209943, 0, -8.32915e-010, 0, 1.7, 0 )
 
-[node name="Left_Controller" parent="ARVROrigin" instance=ExtResource( 4 )]
+[node name="Left_Controller" parent="ARVROrigin" instance=ExtResource( 5 )]
 transform = Transform( 0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0.727002, -0.0121717 )
 visible = false
 script = null
@@ -262,7 +296,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 5 )
+environment = ExtResource( 6 )
 
 [node name="Teleport_Mesh" type="MeshInstance" parent="."]
 editor/display_folded = true
