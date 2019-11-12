@@ -21,6 +21,8 @@ const CONTROLLER_DEADZONE = 0.65 #zona morta
 const MOVEMENT_SPEED = 1.5 #velocità alla quale il giocatore si muove
 var directional_movement = false #valore booleano per tracciare se il giocatore si sta muovendo usando il controller
 
+onready var animazione = get_node("../../World/MeshPlatformer/AnimationP")
+
 func _ready():
     teleport_mesh = get_tree().root.get_node("Game/Teleport_Mesh") #otteniamo il nodo Raycast/Mesh del teletrasporto e lo assegniamo a teleport_raycast
     teleport_button_down = false
@@ -31,9 +33,11 @@ func _ready():
 
     connect("button_pressed", self, "button_pressed")
     connect("button_release", self, "button_released")
+    animazione.stop() 
 
 func _physics_process(delta):
-
+ 
+  #  process_input(delta)
     if teleport_button_down: #controlliamo se il pulsante di teletrasporto è inattivo
         teleport_raycast.force_raycast_update() #forziamo l' aggiornamento del teletrasporto Raycast
         if teleport_raycast.is_colliding():
@@ -43,8 +47,8 @@ func _physics_process(delta):
                     teleport_mesh.global_transform.origin = teleport_pos
             elif teleport_raycast.get_collider() is KinematicBody: 
                 if "MeshPlatformer": #se entriamo in contatto con la piattaforma
-	                $MeshPlatformer1.visible = false
-	                $MeshPlatformer2.visible = true #facciamo partire l'animazione
+	               # get_node("../../World/MeshPlatformer1").visible = false
+	                animazione.play("AnimationPlatform") #facciamo partire l'animazione
 
     # Controller velocity
     # --------------------
@@ -214,3 +218,20 @@ func sleep_area_entered(body):
 func sleep_area_exited(body):
     if "can_sleep" in body:
         body.can_sleep = true
+
+#func process_input(delta):
+ #   var velocity = Vector3()
+  #  if(Input.is_action_pressed("ui_down")):
+  #      velocity.z=-1
+  #      var down_d = get_parent().get_node("Player_Camera").global_transform.basis.z.normalized()
+  #  if(Input.is_action_pressed("ui_up")):
+  #       velocity.z=1
+  #       var up_d = get_parent().get_node("Player_Camera").global_transform.basis.z.normalized()
+  #  if(Input.is_action_pressed("ui_left")):
+  #      velocity.x=-1
+  #      var left_d = get_parent().get_node("Player_Camera").global_transform.basis.z.normalized()
+  #  if(Input.is_action_pressed("ui_right")):
+  #      velocity.x=1
+  #      var right_d = get_parent().get_node("Player_Camera").global_transform.basis.z.normalized()
+  #  var personaggio = get_node("../../KinematicBody")
+  #  personaggio.move_and_slide(velocity*delta*SPEED)
