@@ -21,7 +21,6 @@ const CONTROLLER_DEADZONE = 0.65 #zona morta
 const MOVEMENT_SPEED = 1.5 #velocità alla quale il giocatore si muove
 var directional_movement = false #valore booleano per tracciare se il giocatore si sta muovendo usando il controller
 
-onready var animazione = get_node("../../World/MeshPlatformer/AnimationP")
 
 func _ready():
     teleport_mesh = get_tree().root.get_node("Game/Teleport_Mesh") #otteniamo il nodo Raycast/Mesh del teletrasporto e lo assegniamo a teleport_raycast
@@ -33,7 +32,7 @@ func _ready():
 
     connect("button_pressed", self, "button_pressed")
     connect("button_release", self, "button_released")
-    animazione.stop() 
+
 
 func _physics_process(delta):
  
@@ -45,12 +44,8 @@ func _physics_process(delta):
                 if teleport_raycast.get_collision_normal().y >= 0.85: #verifichiamo se il valore y restituito da Raycast è >0.85
                     teleport_pos = teleport_raycast.get_collision_point() #impostiamo il punto di collisione e spostiamo la mesh di teletrasporto su teleport_pos
                     teleport_mesh.global_transform.origin = teleport_pos
-            elif teleport_raycast.get_collider() is KinematicBody: 
-                if "MeshPlatformer": #se entriamo in contatto con la piattaforma
-	               # get_node("../../World/MeshPlatformer1").visible = false
-	                animazione.play("AnimationPlatform") #facciamo partire l'animazione
 
-    # Controller velocity
+    # Controller velocità
     # --------------------
     if get_is_active(): #Se l'ARVRController è attivo
         controller_velocity = Vector3(0, 0, 0) 
@@ -69,7 +64,6 @@ func _physics_process(delta):
 #se abbiamo velocità maggiori di 1/3 al secondo 
         if prior_controller_velocities.size() > 30:
             prior_controller_velocities.remove(0)  # rimuoviamo la velocità più vecchia da prior_controller_velocities
-			
             if held_object:
                 var held_scale = held_object.scale
                 held_object.global_transform = grab_pos_node.global_transform
@@ -92,7 +86,6 @@ func _physics_process(delta):
     var right_direction = get_parent().get_node("Player_Camera").global_transform.basis.x.normalized()
 # calcoliamo di quanto si sposterà il giocatore sommando insieme i vettori del trackpad e del joystick e normalizzandoli
     var movement_vector = (trackpad_vector + joystick_vector).normalized()
-
     var movement_forward = forward_direction * movement_vector.x * delta * MOVEMENT_SPEED #calcoliamo lo spostamento avanti/indietro
     var movement_right = right_direction * movement_vector.y * delta * MOVEMENT_SPEED #calcoliamo0 lo spostamento destra/sinistra
 #rimuoviamo il movimento sull'asse Y 
@@ -105,6 +98,7 @@ func _physics_process(delta):
     else:
         directional_movement = false
     # --------------------
+
 	
 func button_pressed(button_index):
    if button_index == 15: #se è stato premuto il pulsante di attivazione
@@ -139,9 +133,7 @@ func button_pressed(button_index):
                     if grab_raycast.get_collider() is RigidBody and not "NO_PICKUP" in grab_raycast.get_collider():
                         rigid_body = grab_raycast.get_collider()
 
-
             if rigid_body:
-
                 held_object = rigid_body #abbiamo preso un corpo rigido
 
                 held_object_data["mode"] = held_object.mode
@@ -159,10 +151,7 @@ func button_pressed(button_index):
                     held_object.picked_up()
                 if "controller" in held_object:
                     held_object.controller = self
-
-
         else:
-
             held_object.mode = held_object_data["mode"]
             held_object.collision_layer = held_object_data["layer"]
             held_object.collision_mask = held_object_data["mask"]
@@ -193,8 +182,6 @@ func button_pressed(button_index):
 #            grab_raycast.visible = false
 
 func button_released(button_index):
-
-    # If the trigger button is released...
     if button_index == 15:
 
         if teleport_button_down:
@@ -218,20 +205,3 @@ func sleep_area_entered(body):
 func sleep_area_exited(body):
     if "can_sleep" in body:
         body.can_sleep = true
-
-#func process_input(delta):
- #   var velocity = Vector3()
-  #  if(Input.is_action_pressed("ui_down")):
-  #      velocity.z=-1
-  #      var down_d = get_parent().get_node("Player_Camera").global_transform.basis.z.normalized()
-  #  if(Input.is_action_pressed("ui_up")):
-  #       velocity.z=1
-  #       var up_d = get_parent().get_node("Player_Camera").global_transform.basis.z.normalized()
-  #  if(Input.is_action_pressed("ui_left")):
-  #      velocity.x=-1
-  #      var left_d = get_parent().get_node("Player_Camera").global_transform.basis.z.normalized()
-  #  if(Input.is_action_pressed("ui_right")):
-  #      velocity.x=1
-  #      var right_d = get_parent().get_node("Player_Camera").global_transform.basis.z.normalized()
-  #  var personaggio = get_node("../../KinematicBody")
-  #  personaggio.move_and_slide(velocity*delta*SPEED)

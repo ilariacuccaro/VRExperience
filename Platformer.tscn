@@ -154,7 +154,7 @@ surfaces/0 = {
 "vertex_count": 196
 }
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=6]
 
 [sub_resource type="Animation" id=5]
 length = 10.0
@@ -186,17 +186,21 @@ material/0 = null
 
 [node name="Platformer" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0 )
+visible = false
 input_capture_on_drag = true
 
 [node name="CollisionShape" type="CollisionShape" parent="Platformer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.67472, 0 )
-shape = SubResource( 4 )
+visible = false
+shape = SubResource( 6 )
 
 [node name="RayCast" type="RayCast" parent="Platformer"]
+visible = false
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 10, 0, 0, 0, 1, -0.57622, 1.3615, 2.5772 )
+visible = false
 
-[node name="AnimationPlatform" type="AnimationPlayer" parent="."]
+[node name="AnimationP" type="AnimationPlayer" parent="."]
 autoplay = "AnimPlatformer"
 anims/AnimPlatformer = SubResource( 5 )
