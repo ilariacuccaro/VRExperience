@@ -1,12 +1,11 @@
 extends RigidBody
 
-signal moveP
+signal stopP
 
 func _ready():
-	connect("body_entered", self, "platform_enter")
+	connect("body_entered", self, "platform_stop")
 
-
-func platform_enter(body):
+func platform_stop(body):
 	if body.get_name() == "Platformer":
 		print("collision with platform", body.get_name())
-		emit_signal("moveP")
+		emit_signal("stopP")
