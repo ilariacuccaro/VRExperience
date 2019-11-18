@@ -1,13 +1,14 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Platformer.gd" type="Script" id=1]
 [ext_resource path="res://texture_pietra.jpg" type="Texture" id=2]
 [ext_resource path="res://Default OBJ.material" type="Material" id=3]
 [ext_resource path="res://Floor2y.gd" type="Script" id=4]
-[ext_resource path="res://default_env.tres" type="Environment" id=5]
-[ext_resource path="res://RigidBody_Player.gd" type="Script" id=6]
-[ext_resource path="res://Right_Controller.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Left_Controller.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Bridge.tscn" type="PackedScene" id=5]
+[ext_resource path="res://default_env.tres" type="Environment" id=6]
+[ext_resource path="res://RigidBody_Player.gd" type="Script" id=7]
+[ext_resource path="res://Right_Controller.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Left_Controller.tscn" type="PackedScene" id=9]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.607843, 0.933333, 0.623529, 1 )
@@ -17,6 +18,14 @@ metallic = 0.5
 material = SubResource( 1 )
 
 [sub_resource type="BoxShape" id=3]
+
+[sub_resource type="PhysicsMaterial" id=4]
+
+[sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="SpatialMaterial" id=6]
+
+[sub_resource type="BoxShape" id=7]
 
 [sub_resource type="BoxShape" id=8]
 
@@ -222,6 +231,20 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="World/Floor1/StaticBody"]
 shape = SubResource( 3 )
 
+[node name="Cubo" type="RigidBody" parent="World"]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8426, 0.603034, 0.21326 )
+physics_material_override = SubResource( 4 )
+
+[node name="Meshcubo" type="MeshInstance" parent="World/Cubo"]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.0659256, -0.04493, -0.00695471 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Cubo"]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.25, -0.0829029, -0.0483174, 0 )
+shape = SubResource( 7 )
+
 [node name="Platformer" type="KinematicBody" parent="World"]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1.3, 0, 0, 0, 1, -18.3, 0.25, -0.0870044 )
@@ -267,8 +290,10 @@ material/0 = SubResource( 14 )
 [node name="CollisionShape" type="CollisionShape" parent="World/Floor3/StaticBody"]
 shape = SubResource( 16 )
 
+[node name="Bridge" parent="World" instance=ExtResource( 5 )]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 5 )
+environment = ExtResource( 6 )
 
 [node name="Teleport_Mesh" type="MeshInstance" parent="."]
 editor/display_folded = true
@@ -278,30 +303,29 @@ visible = false
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 
-[node name="RigidBody_Player" type="RigidBody" parent="."]
-editor/display_folded = true
-transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0, 1.85, 0 )
+[node name="Player" type="RigidBody" parent="."]
+transform = Transform( 0.0166631, 0, 0.999875, 0, 1, 0, -0.999875, 0, 0.0150908, -9.74435, 13.383, -5.92321 )
 contacts_reported = 2
 contact_monitor = true
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
-[node name="CollisionPlayer" type="CollisionShape" parent="RigidBody_Player"]
+[node name="CollisionPlayer" type="CollisionShape" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1.85, 0, 0, 0, 1, -0.136072, 0, 0 )
 shape = SubResource( 17 )
 
-[node name="ARVROrigin" type="ARVROrigin" parent="RigidBody_Player"]
+[node name="ARVROrigin" type="ARVROrigin" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.24358, 0 )
 
-[node name="Player_Camera" type="ARVRCamera" parent="RigidBody_Player/ARVROrigin"]
-transform = Transform( 0.832903, 4.48278e-010, -3.58212e-009, 0, 0.992261, 0.124175, 0, -0.10868, 0.868446, 0, 0, 0 )
+[node name="Player_Camera" type="ARVRCamera" parent="Player/ARVROrigin"]
+transform = Transform( -0.819096, -0.0300576, 0.147998, -0.041249, 0.998825, -0.025437, -0.154531, -0.0283089, -0.861004, 9.53674e-007, 0, 0 )
 
-[node name="Right_Controller" parent="RigidBody_Player/ARVROrigin" instance=ExtResource( 7 )]
+[node name="Right_Controller" parent="Player/ARVROrigin" instance=ExtResource( 8 )]
 transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0 )
 
-[node name="Left_Controller" parent="RigidBody_Player/ARVROrigin" instance=ExtResource( 8 )]
+[node name="Left_Controller" parent="Player/ARVROrigin" instance=ExtResource( 9 )]
 visible = false
 script = null
-[connection signal="body_entered" from="World/Floor2/StaticBody" to="World/Floor2/StaticBody" method="platform_stop"]
 [connection signal="stopP" from="World/Floor2/StaticBody" to="World/Platformer" method="_on_Platform_stopP"]
-[connection signal="body_entered" from="RigidBody_Player" to="RigidBody_Player" method="platform_enter"]
-[connection signal="moveP" from="RigidBody_Player" to="World/Platformer" method="_on_RigidBody_Player_moveP"]
+[connection signal="moveB" from="Player" to="World/Bridge" method="_on_Player_bridge"]
+[connection signal="moveP" from="Player" to="World/Bridge" method="_exit_Player_bridge"]
+[connection signal="moveP" from="Player" to="World/Platformer" method="_on_Player_moveP"]
