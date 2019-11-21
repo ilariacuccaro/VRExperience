@@ -4,7 +4,7 @@
 [ext_resource path="res://texture_pietra.jpg" type="Texture" id=2]
 [ext_resource path="res://Default OBJ.material" type="Material" id=3]
 [ext_resource path="res://Floor2.gd" type="Script" id=4]
-[ext_resource path="res://BridgeBoards.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Bridge4.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PillarsBridge.tscn" type="PackedScene" id=6]
 [ext_resource path="res://default_env.tres" type="Environment" id=7]
 [ext_resource path="res://Player.gd" type="Script" id=8]
@@ -244,6 +244,7 @@ material/0 = ExtResource( 3 )
 anims/MovingP = SubResource( 8 )
 
 [node name="Floor2" type="MeshInstance" parent="World"]
+editor/display_folded = true
 transform = Transform( 8.326, 0, 0, 0, 0.25, 0, 0, 0, 5, -19.218, 10.06, -6.21724 )
 mesh = SubResource( 9 )
 material/0 = SubResource( 10 )
@@ -270,10 +271,10 @@ material/0 = SubResource( 10 )
 [node name="CollisionShape" type="CollisionShape" parent="World/Floor3/StaticBody"]
 shape = SubResource( 12 )
 
-[node name="Bridge" parent="World" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 0.8, 0, 0, 0, 1.001, 0.746002, 9.65, -6.277 )
-
 [node name="MeshInstance" type="MeshInstance" parent="World"]
+
+[node name="Bridge" parent="World" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.1, 0.652, 9.274, -6 )
 
 [node name="Pillars" parent="World" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0.651, 9.65, -6.277 )
@@ -290,9 +291,10 @@ visible = false
 [node name="MeshInstance" type="MeshInstance" parent="."]
 
 [node name="Player" type="RigidBody" parent="."]
-transform = Transform( 1.00001, 0, 0, 0, 1, 0, 0, 0, 0.999989, -12.1702, 13.1666, -6.45231 )
+transform = Transform( 1.00001, 0, 0, 0, 1, 0, 0, 0, 0.999995, -16.6534, 12.75, -5.954 )
 physics_material_override = SubResource( 13 )
-contacts_reported = 2
+continuous_cd = true
+contacts_reported = 4
 contact_monitor = true
 script = ExtResource( 8 )
 
@@ -313,6 +315,6 @@ transform = Transform( -3.49691e-008, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-008,
 visible = false
 script = null
 [connection signal="stopP" from="World/Floor2/StaticBody" to="World/Platformer" method="_on_Platform_stopP"]
-[connection signal="moveB" from="Player" to="World/Bridge" method="_on_Player_bridge"]
+[connection signal="moveB" from="Player" to="World/Bridge" method="on_Player_bridge"]
 [connection signal="moveP" from="Player" to="World/Platformer" method="_on_Player_moveP"]
-[connection signal="notmoveB" from="Player" to="World/Bridge" method="_exit_Player_bridge"]
+[connection signal="notmoveB" from="Player" to="World/Bridge" method="exit_Player_bridge"]
