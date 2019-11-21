@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Platformer.gd" type="Script" id=1]
 [ext_resource path="res://texture_pietra.jpg" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Player.gd" type="Script" id=8]
 [ext_resource path="res://Right_Controller.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Left_Controller.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Movement_Vignette.tscn" type="PackedScene" id=11]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.607843, 0.933333, 0.623529, 1 )
@@ -304,7 +305,6 @@ mesh = SubResource( 14 )
 material/0 = null
 
 [node name="Player" type="RigidBody" parent="."]
-editor/display_folded = true
 transform = Transform( 1.00001, 0, 0, 0, 1, 0, 0, 0, 0.999998, -20.5675, 2.36931, -0.152222 )
 physics_material_override = SubResource( 15 )
 continuous_cd = true
@@ -317,7 +317,6 @@ transform = Transform( 1, 0, 0, 0, 1.85, 0, 0, 0, 1, -0.136072, 0, 0 )
 shape = SubResource( 16 )
 
 [node name="ARVROrigin" type="ARVROrigin" parent="Player"]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
 
 [node name="Player_Camera" type="ARVRCamera" parent="Player/ARVROrigin"]
@@ -329,6 +328,9 @@ transform = Transform( -3.49691e-008, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-008,
 [node name="Left_Controller" parent="Player/ARVROrigin" instance=ExtResource( 10 )]
 visible = false
 script = null
+
+[node name="Movement_Vignette" parent="Player/ARVROrigin" instance=ExtResource( 11 )]
+visible = false
 [connection signal="stopP" from="World/Floor2/StaticBody" to="World/Platformer" method="_on_Platform_stopP"]
 [connection signal="moveB" from="Player" to="World/Bridge" method="on_Player_bridge"]
 [connection signal="moveP" from="Player" to="World/Platformer" method="_on_Player_moveP"]
