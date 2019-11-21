@@ -14,13 +14,13 @@ func _physics_process(delta):
 #			rotate_object_local(Vector3(1,0,0),deg2rad(0.2))
 			rotate_object_local(Vector3(1,0,0),0.05)
 			r = get_rotation_degrees().x
-			print("rotation bridge", rotation, "  ->  ", r)
+#			print("rotation bridge", rotation, "  ->  ", r)
 	#	print("change")
 		while(r > -2.2):
 		#	set_rotation_degrees(Vector3(0,0,0))
 			rotate_object_local(Vector3(-1,0,0),0.05)
 			r = get_rotation_degrees().x
-			print("rotation Bridge", rotation, "  <-  ", r)
+#			print("rotation Bridge", rotation, "  <-  ", r)
 	#	print("change")
 	
 func exit_Player_bridge():

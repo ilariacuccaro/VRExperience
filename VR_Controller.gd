@@ -64,10 +64,12 @@ func _physics_process(delta):
 #se abbiamo velocità maggiori di 1/3 al secondo 
         if prior_controller_velocities.size() > 30:
             prior_controller_velocities.remove(0)  # rimuoviamo la velocità più vecchia da prior_controller_velocities
-            if held_object:
-                var held_scale = held_object.scale
-                held_object.global_transform = grab_pos_node.global_transform
-                held_object.scale = held_scale
+#--------------------------------- 
+#   if held_object: #controlliamo se c'è un oggetto trattenuto
+ #       var held_scale = held_object.scale
+ #       held_object.global_transform = grab_pos_node.global_transform #aggiorniamo la posizione e la rotazione dell'oggetto trattenuto
+ #       held_object.scale = held_scale
+#--------------------------------- 
   # convertiamo i valori degli assi in variabili Vector2 , in modo da poterli elaborare
     var trackpad_vector = Vector2(-get_joystick_axis(1), get_joystick_axis(0))
     var joystick_vector = Vector2(-get_joystick_axis(5), get_joystick_axis(4))
@@ -118,6 +120,7 @@ func button_pressed(button_index):
 
         if not held_object: # se il controller non sta tenendo un oggetto 
             var rigid_body = null
+			
             if grab_mode == "AREA": #se sto usando la modalità Area per afferrare 
                 var bodies = grab_area.get_overlapping_bodies() #otteniamo tutti i corpi sovrapposti all'area
                 if len(bodies) > 0:
@@ -133,44 +136,44 @@ func button_pressed(button_index):
                     if grab_raycast.get_collider() is RigidBody and not "NO_PICKUP" in grab_raycast.get_collider():
                         rigid_body = grab_raycast.get_collider()
 
-            if rigid_body:
-                held_object = rigid_body #abbiamo preso un corpo rigido
+    #        if rigid_body:
+    #            held_object = rigid_body #abbiamo preso un corpo rigido
+    #            held_object_data["mode"] = held_object.mode
+    #            held_object_data["layer"] = held_object.collision_layer
+    #            held_object_data["mask"] = held_object.collision_mask
 
-                held_object_data["mode"] = held_object.mode
-                held_object_data["layer"] = held_object.collision_layer
-                held_object_data["mask"] = held_object.collision_mask
+     #           held_object.mode = RigidBody.MODE_STATIC
+     #           held_object.collision_layer = 0
+     #           held_object.collision_mask = 0
 
-                held_object.mode = RigidBody.MODE_STATIC
-                held_object.collision_layer = 0
-                held_object.collision_mask = 0
+    #            hand_mesh.visible = false
+    #            grab_raycast.visible = false
 
-                hand_mesh.visible = false
-                grab_raycast.visible = false
+     #           if held_object.has_method("picked_up"):
+     #               held_object.picked_up()
+     #           if "controller" in held_object:
+     #               held_object.controller = self
 
-                if held_object.has_method("picked_up"):
-                    held_object.picked_up()
-                if "controller" in held_object:
-                    held_object.controller = self
-        else:
-            held_object.mode = held_object_data["mode"]
-            held_object.collision_layer = held_object_data["layer"]
-            held_object.collision_mask = held_object_data["mask"]
+       # else:
+       #     held_object.mode = held_object_data["mode"]
+       #     held_object.collision_layer = held_object_data["layer"]
+       #     held_object.collision_mask = held_object_data["mask"]
 
-            held_object.apply_impulse(Vector3(0, 0, 0), controller_velocity)
+        #    held_object.apply_impulse(Vector3(0, 0, 0), controller_velocity)
 
-            if held_object.has_method("dropped"): #Se il RigidBody precedentemente detenuto ha una funzione chiamata dropped
-                held_object.dropped() # la chiamiamo
+     #       if held_object.has_method("dropped"): #Se il RigidBody precedentemente detenuto ha una funzione chiamata dropped
+     #           held_object.dropped() # la chiamiamo
 
-            if "controller" in held_object:
-                held_object.controller = null
+      #      if "controller" in held_object:
+      #          held_object.controller = null
 
-            held_object = null  #non ho può oggetti
-            hand_mesh.visible = true  #la mano è ora visibile
+ #           held_object = null  #non ho può oggetti
+  #          hand_mesh.visible = true  #la mano è ora visibile
 
-            if grab_mode == "RAYCAST":
-                grab_raycast.visible = true
+   #         if grab_mode == "RAYCAST":
+    #            grab_raycast.visible = true
 
-    # If the menu button is pressed...
+    #Se viene premuto il pulsante menu...
  #   if button_index == 1:
  #       if grab_mode == "AREA":
  #           grab_mode = "RAYCAST"
