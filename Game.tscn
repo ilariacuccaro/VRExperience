@@ -1,16 +1,18 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
-[ext_resource path="res://Platformer.gd" type="Script" id=1]
-[ext_resource path="res://texture_pietra.jpg" type="Texture" id=2]
-[ext_resource path="res://Default OBJ.material" type="Material" id=3]
-[ext_resource path="res://Floor2.gd" type="Script" id=4]
-[ext_resource path="res://Bridge4.tscn" type="PackedScene" id=5]
-[ext_resource path="res://PillarsBridge.tscn" type="PackedScene" id=6]
-[ext_resource path="res://default_env.tres" type="Environment" id=7]
-[ext_resource path="res://Player.gd" type="Script" id=8]
-[ext_resource path="res://Right_Controller.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Left_Controller.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Movement_Vignette.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Floor1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Platformer.gd" type="Script" id=2]
+[ext_resource path="res://texture_pietra.jpg" type="Texture" id=3]
+[ext_resource path="res://Default OBJ.material" type="Material" id=4]
+[ext_resource path="res://Floor2.gd" type="Script" id=5]
+[ext_resource path="res://Bridge4.tscn" type="PackedScene" id=6]
+[ext_resource path="res://PillarsBridge.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Lava.tscn" type="PackedScene" id=8]
+[ext_resource path="res://default_env.tres" type="Environment" id=9]
+[ext_resource path="res://Player.gd" type="Script" id=10]
+[ext_resource path="res://Right_Controller.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Left_Controller.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Movement_Vignette.tscn" type="PackedScene" id=13]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.607843, 0.933333, 0.623529, 1 )
@@ -159,7 +161,7 @@ void fragment () {
 
 [sub_resource type="ShaderMaterial" id=6]
 shader = SubResource( 5 )
-shader_param/texture_0 = ExtResource( 2 )
+shader_param/texture_0 = ExtResource( 3 )
 
 [sub_resource type="ArrayMesh" id=7]
 surfaces/0 = {
@@ -226,37 +228,41 @@ transform = Transform( 1.14257, 0, 0, 0, 1, 0, 0, 0, 1.20062, -10.8827, 5.96304,
 [node name="World" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38543, 0, 0 )
 
-[node name="Floor1" type="MeshInstance" parent="World"]
+[node name="FloorV" type="MeshInstance" parent="World"]
 editor/display_folded = true
 transform = Transform( 31.674, 0, 0, 0, 0.1, 0, 0, 0, 31.895, 0, 0, 0 )
+visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="StaticBody" type="StaticBody" parent="World/Floor1"]
+[node name="StaticBody" type="StaticBody" parent="World/FloorV"]
 
-[node name="CollisionShape" type="CollisionShape" parent="World/Floor1/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="World/FloorV/StaticBody"]
 shape = SubResource( 3 )
+
+[node name="Floor1" parent="World" instance=ExtResource( 1 )]
+transform = Transform( -3.0598e-007, 7, -4.37114e-007, 0, -3.0598e-007, -10, -7, -3.0598e-007, 1.91069e-014, 8.297, -6, 0 )
 
 [node name="Platformer" type="KinematicBody" parent="World"]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1.3, 0, 0, 0, 1, -18.3, 0.25, -0.0870044 )
-script = ExtResource( 1 )
+transform = Transform( 1, 0, 0, 0, 1.3, 0, 0, 0, 1, -11.565, 1.1, 3.945 )
+script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="World/Platformer"]
-transform = Transform( 1.05, 0, 0, 0, 0.1, 0, 0, 0, 1.15, 0, 0, -0.0951235 )
+transform = Transform( 1.05, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, -0.0951235 )
 shape = SubResource( 4 )
 
 [node name="MeshPlatformer" type="MeshInstance" parent="World/Platformer"]
 transform = Transform( 1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 7 )
-material/0 = ExtResource( 3 )
+material/0 = ExtResource( 4 )
 
 [node name="AnimationP" type="AnimationPlayer" parent="World/Platformer"]
 anims/MovingP = SubResource( 8 )
 
 [node name="Floor2" type="MeshInstance" parent="World"]
 editor/display_folded = true
-transform = Transform( 8.326, 0, 0, 0, 0.25, 0, 0, 0, 5, -19.218, 10.06, -6.21724 )
+transform = Transform( 8.326, 0, 0, 0, 0.25, 0, 0, 0, 5.00001, -12.5951, 10.06, -2.2719 )
 mesh = SubResource( 9 )
 material/0 = SubResource( 10 )
 
@@ -265,15 +271,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.09451, 0, 0, 0.0818801 )
 mode = 1
 physics_material_override = SubResource( 11 )
 contact_monitor = true
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 
 [node name="CollisionShape" type="CollisionShape" parent="World/Floor2/StaticBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.919061, 0, 0, -0.0773327 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.95, 0, 0, -0.0742714 )
 shape = SubResource( 12 )
 
 [node name="Floor3" type="MeshInstance" parent="World"]
 editor/display_folded = true
-transform = Transform( 8, 0, 0, 0, 0.25, 0, 0, 0, 8, 20.7244, 10.15, -6.113 )
+transform = Transform( 8, 0, 0, 0, 0.25, 0, 0, 0, 13, 27.3473, 10.15, 2.03707 )
 mesh = SubResource( 9 )
 material/0 = SubResource( 10 )
 
@@ -284,52 +290,53 @@ shape = SubResource( 12 )
 
 [node name="MeshInstance" type="MeshInstance" parent="World"]
 
-[node name="Bridge" parent="World" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.1, 0.652, 9.274, -6 )
+[node name="Bridge" parent="World" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.1, 7.6655, 9.274, -2.05263 )
 
-[node name="Pillars" parent="World" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0.651, 9.65, -6.277 )
+[node name="Pillars" parent="World" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 0.8, 0, 0, 0, 1, 7.6645, 9.65, -2.32963 )
+
+[node name="Lava" parent="World" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.31185, 0 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 7 )
+environment = ExtResource( 9 )
 
 [node name="Teleport_Mesh" type="MeshInstance" parent="."]
-editor/display_folded = true
 visible = false
 mesh = SubResource( 13 )
 material/0 = null
 
 [node name="Teleport_Pointy" type="MeshInstance" parent="Teleport_Mesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0 )
 mesh = SubResource( 14 )
 material/0 = null
 
 [node name="Player" type="RigidBody" parent="."]
-transform = Transform( 1.00001, 0, 0, 0, 1, 0, 0, 0, 0.999998, -20.5675, 2.36931, -0.152222 )
+transform = Transform( 1.00001, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 3.2, 4.247 )
 physics_material_override = SubResource( 15 )
 continuous_cd = true
 contacts_reported = 4
 contact_monitor = true
-script = ExtResource( 8 )
+script = ExtResource( 10 )
 
 [node name="CollisionPlayer" type="CollisionShape" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1.85, 0, 0, 0, 1, -0.136072, 0, 0 )
+transform = Transform( 0.8, 0, 0, 0, 1.85, 0, 0, 0, 0.8, -0.136072, 0, 0 )
 shape = SubResource( 16 )
 
 [node name="ARVROrigin" type="ARVROrigin" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 0, -0.24358, 0 )
 
 [node name="Player_Camera" type="ARVRCamera" parent="Player/ARVROrigin"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-007, 0, 0 )
+transform = Transform( -0.819096, -0.0300576, 0.147998, -0.041249, 0.998825, -0.025437, -0.154531, -0.0283089, -0.861004, 9.53674e-007, 0, 0 )
 
-[node name="Right_Controller" parent="Player/ARVROrigin" instance=ExtResource( 9 )]
+[node name="Right_Controller" parent="Player/ARVROrigin" instance=ExtResource( 11 )]
 transform = Transform( -3.49691e-008, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-008, 0, 0, 0 )
 
-[node name="Left_Controller" parent="Player/ARVROrigin" instance=ExtResource( 10 )]
+[node name="Left_Controller" parent="Player/ARVROrigin" instance=ExtResource( 12 )]
 visible = false
 script = null
 
-[node name="Movement_Vignette" parent="Player/ARVROrigin" instance=ExtResource( 11 )]
+[node name="Movement_Vignette" parent="Player/ARVROrigin" instance=ExtResource( 13 )]
 visible = false
 [connection signal="stopP" from="World/Floor2/StaticBody" to="World/Platformer" method="_on_Platform_stopP"]
 [connection signal="moveB" from="Player" to="World/Bridge" method="on_Player_bridge"]
