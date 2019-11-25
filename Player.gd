@@ -7,7 +7,7 @@ signal moveP
 signal moveB
 signal notmoveB
 var r = 0
-var move = false
+#var move = false
 #var bridge = load("res://Bridge4.tscn") 
 #var node = bridge.instance()
 #var CollS
@@ -27,13 +27,15 @@ func enter(body):
 		emit_signal("moveP")
 	if body.get_name() == "Bridge":
 		print("collision with a bridge / ", body.get_name())
-		move = true
+#		move = true
 		emit_signal("moveB")
 	if body.get_name() == "Board":
 		print("enter on boards", body.get_name())
-	print("Collision whith: ", body.name)
+	else:
+		print("Collision whith: ", body.get_name())
 
 #func _physics_process(delta):
+#	print(self.transform.translated(Vector3()))
 #	if(move):
 #		while(r < 2.2):
 #				rotate_object_local(Vector3(1,0,0),0.05499499)
@@ -49,5 +51,5 @@ func enter(body):
 func exit(body):
 	if body.get_name() == "Bridge":
 		print("exit from bridge")
-		move = false
+#		move = false
 		emit_signal("notmoveB")
