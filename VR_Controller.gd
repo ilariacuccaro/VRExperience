@@ -113,7 +113,7 @@ func _physics_process(delta):
 	var trackpad_vector = Vector2(-get_joystick_axis(1), get_joystick_axis(0))
 	var joystick_vector = Vector2(-get_joystick_axis(5), get_joystick_axis(4))
 	
-	# Tiene conto delle zpne morte
+	# Tiene conto delle zone morte
 	if trackpad_vector.length() < CONTROLLER_DEADZONE:
 		trackpad_vector = Vector2(0,0)
 	else:

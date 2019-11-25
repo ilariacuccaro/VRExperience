@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/StonesJ2.escn-0c5aed219893dd7157983bc6fd1a96d3.scn"
+path="res://.import/StonesJ4.escn-2e6343958f6c125fb558cf675533b262.scn"
 
 [deps]
 
-source_file="res://StonesJ2.escn"
-dest_files=[ "res://.import/StonesJ2.escn-0c5aed219893dd7157983bc6fd1a96d3.scn" ]
+source_file="res://StonesJ4.escn"
+dest_files=[ "res://.import/StonesJ4.escn-2e6343958f6c125fb558cf675533b262.scn" ]
 
 [params]
 

@@ -1,8 +1,9 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://texture_pietra.jpg" type="Texture" id=1]
+[ext_resource path="res://Rock-Texture-Surface.jpg.001.jpg" type="Texture" id=1]
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="ConvexPolygonShape" id=1]
+points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 
 [sub_resource type="Shader" id=2]
 code = "shader_type spatial;
@@ -134,6 +135,7 @@ shader_param/texture_0 = ExtResource( 1 )
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_always, cull_back, diffuse_burley, specular_schlick_ggx;
 
+uniform sampler2D texture_0;
 
 
 void node_bsdf_principled(vec4 color, float subsurface, vec4 subsurface_color,
@@ -161,80 +163,99 @@ void node_bsdf_principled(vec4 color, float subsurface, vec4 subsurface_color,
     ior = IOR;
 }
 
+
+void node_tex_image(vec3 co, sampler2D ima, out vec4 color, out float alpha) {
+    color = texture(ima, co.xy);
+    alpha = color.a;
+}
+
 void vertex () {
 }
 
 void fragment () {
 	
+	// node: 'Image Texture'
+	// type: 'ShaderNodeTexImage'
+	// input sockets handling
+	vec3 node0_in0_vector = vec3(0.0, 0.0, 0.0);
+	// output sockets definitions
+	vec4 node0_out0_color;
+	float node0_out1_alpha;
+	
+	node0_in0_vector = vec3(UV, 0.0);
+	node_tex_image(node0_in0_vector, texture_0, node0_out0_color, node0_out1_alpha);
+	
+	
 	// node: 'Principled BSDF'
 	// type: 'ShaderNodeBsdfPrincipled'
 	// input sockets handling
-	vec4 node0_in0_basecolor = vec4(1.0, 1.0, 1.0, 1.0);
-	float node0_in1_subsurface = float(0.0);
-	vec3 node0_in2_subsurfaceradius = vec3(1.0, 0.20000000298023224,
+	vec4 node1_in0_basecolor = node0_out0_color;
+	float node1_in1_subsurface = float(0.0);
+	vec3 node1_in2_subsurfaceradius = vec3(1.0, 0.20000000298023224,
 		0.10000000149011612);
-	vec4 node0_in3_subsurfacecolor = vec4(0.800000011920929, 0.800000011920929,
+	vec4 node1_in3_subsurfacecolor = vec4(0.800000011920929, 0.800000011920929,
 		0.800000011920929, 1.0);
-	float node0_in4_metallic = float(0.0);
-	float node0_in5_specular = float(0.5);
-	float node0_in6_speculartint = float(0.0);
-	float node0_in7_roughness = float(0.6732679605484009);
-	float node0_in8_anisotropic = float(0.0);
-	float node0_in9_anisotropicrotation = float(0.0);
-	float node0_in10_sheen = float(0.0);
-	float node0_in11_sheentint = float(0.5);
-	float node0_in12_clearcoat = float(0.0);
-	float node0_in13_clearcoatroughness = float(0.029999999329447746);
-	float node0_in14_ior = float(1.0);
-	float node0_in15_transmission = float(0.0);
-	float node0_in16_transmissionroughness = float(0.0);
-	vec4 node0_in17_emission = vec4(0.0, 0.0, 0.0, 1.0);
-	float node0_in18_alpha = float(1.0);
-	vec3 node0_in19_normal = NORMAL;
-	vec3 node0_in20_clearcoatnormal = vec3(0.0, 0.0, 0.0);
-	vec3 node0_in21_tangent = TANGENT;
+	float node1_in4_metallic = float(0.0);
+	float node1_in5_specular = float(0.5);
+	float node1_in6_speculartint = float(0.0);
+	float node1_in7_roughness = float(0.6732679605484009);
+	float node1_in8_anisotropic = float(0.0);
+	float node1_in9_anisotropicrotation = float(0.0);
+	float node1_in10_sheen = float(0.0);
+	float node1_in11_sheentint = float(0.5);
+	float node1_in12_clearcoat = float(0.0);
+	float node1_in13_clearcoatroughness = float(0.029999999329447746);
+	float node1_in14_ior = float(1.0);
+	float node1_in15_transmission = float(0.0);
+	float node1_in16_transmissionroughness = float(0.0);
+	vec4 node1_in17_emission = vec4(0.0, 0.0, 0.0, 1.0);
+	float node1_in18_alpha = float(1.0);
+	vec3 node1_in19_normal = NORMAL;
+	vec3 node1_in20_clearcoatnormal = vec3(0.0, 0.0, 0.0);
+	vec3 node1_in21_tangent = TANGENT;
 	// output sockets definitions
-	vec3 node0_bsdf_out0_albedo;
-	float node0_bsdf_out1_sss_strength;
-	float node0_bsdf_out3_specular;
-	float node0_bsdf_out2_metallic;
-	float node0_bsdf_out4_roughness;
-	float node0_bsdf_out5_clearcoat;
-	float node0_bsdf_out6_clearcoat_gloss;
-	float node0_bsdf_out7_anisotropy;
-	float node0_bsdf_out8_transmission;
-	float node0_bsdf_out9_ior;
+	vec3 node1_bsdf_out0_albedo;
+	float node1_bsdf_out1_sss_strength;
+	float node1_bsdf_out3_specular;
+	float node1_bsdf_out2_metallic;
+	float node1_bsdf_out4_roughness;
+	float node1_bsdf_out5_clearcoat;
+	float node1_bsdf_out6_clearcoat_gloss;
+	float node1_bsdf_out7_anisotropy;
+	float node1_bsdf_out8_transmission;
+	float node1_bsdf_out9_ior;
 	
-	node_bsdf_principled(node0_in0_basecolor, node0_in1_subsurface,
-		node0_in3_subsurfacecolor, node0_in4_metallic, node0_in5_specular,
-		node0_in7_roughness, node0_in12_clearcoat, node0_in13_clearcoatroughness,
-		node0_in8_anisotropic, node0_in15_transmission, node0_in14_ior,
-		node0_bsdf_out0_albedo, node0_bsdf_out1_sss_strength, node0_bsdf_out2_metallic,
-		node0_bsdf_out3_specular, node0_bsdf_out4_roughness, node0_bsdf_out5_clearcoat,
-		node0_bsdf_out6_clearcoat_gloss, node0_bsdf_out7_anisotropy,
-		node0_bsdf_out8_transmission, node0_bsdf_out9_ior);
+	node_bsdf_principled(node1_in0_basecolor, node1_in1_subsurface,
+		node1_in3_subsurfacecolor, node1_in4_metallic, node1_in5_specular,
+		node1_in7_roughness, node1_in12_clearcoat, node1_in13_clearcoatroughness,
+		node1_in8_anisotropic, node1_in15_transmission, node1_in14_ior,
+		node1_bsdf_out0_albedo, node1_bsdf_out1_sss_strength, node1_bsdf_out2_metallic,
+		node1_bsdf_out3_specular, node1_bsdf_out4_roughness, node1_bsdf_out5_clearcoat,
+		node1_bsdf_out6_clearcoat_gloss, node1_bsdf_out7_anisotropy,
+		node1_bsdf_out8_transmission, node1_bsdf_out9_ior);
 	
 	
-	ALBEDO = node0_bsdf_out0_albedo;
-	SSS_STRENGTH = node0_bsdf_out1_sss_strength;
-	SPECULAR = node0_bsdf_out3_specular;
-	METALLIC = node0_bsdf_out2_metallic;
-	ROUGHNESS = node0_bsdf_out4_roughness;
-	CLEARCOAT = node0_bsdf_out5_clearcoat;
-	CLEARCOAT_GLOSS = node0_bsdf_out6_clearcoat_gloss;
-	NORMAL = node0_in19_normal;
+	ALBEDO = node1_bsdf_out0_albedo;
+	SSS_STRENGTH = node1_bsdf_out1_sss_strength;
+	SPECULAR = node1_bsdf_out3_specular;
+	METALLIC = node1_bsdf_out2_metallic;
+	ROUGHNESS = node1_bsdf_out4_roughness;
+	CLEARCOAT = node1_bsdf_out5_clearcoat;
+	CLEARCOAT_GLOSS = node1_bsdf_out6_clearcoat_gloss;
+	NORMAL = node1_in19_normal;
 	// uncomment it when you need it
-	// TRANSMISSION = vec3(1.0, 1.0, 1.0) * node0_bsdf_out8_transmission;
+	// TRANSMISSION = vec3(1.0, 1.0, 1.0) * node1_bsdf_out8_transmission;
 	// uncomment it when you are modifing TANGENT
-	// TANGENT = normalize(cross(cross(node0_in21_tangent, NORMAL), NORMAL));
+	// TANGENT = normalize(cross(cross(node1_in21_tangent, NORMAL), NORMAL));
 	// BINORMAL = cross(TANGENT, NORMAL);
 	// uncomment it when you have tangent(UV) set
-	// ANISOTROPY = node0_bsdf_out7_anisotropy;
+	// ANISOTROPY = node1_bsdf_out7_anisotropy;
 }
 "
 
 [sub_resource type="ShaderMaterial" id=5]
 shader = SubResource( 4 )
+shader_param/texture_0 = ExtResource( 1 )
 
 [sub_resource type="ArrayMesh" id=6]
 surfaces/0 = {
@@ -263,14 +284,14 @@ surfaces/1 = {
 }
 
 [node name="Floor1" type="StaticBody"]
-transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, -3, 0 )
+transform = Transform( 1, 0, 0, 0, 0.999221, 0.0394715, 0, -0.0394715, 0.999221, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 8, 0, 0, 0, 1, 0, 0, 0, 8, 0.066, 0.25, 0 )
+transform = Transform( 85, 0, 0, 0, 9.99924, -1.05339, 0, 0.123929, 84.9935, 0, 3.16695, 0.125102 )
 shape = SubResource( 1 )
 
-[node name="Cube040" type="MeshInstance" parent="."]
-transform = Transform( 0.53305, -0.0933061, 0.427013, -0.0592353, -0.686713, -0.077591, 0.395633, 0.0228978, -0.586946, 0.621688, -0.100269, 5.08504 )
+[node name="MeshFloor" type="MeshInstance" parent="."]
+transform = Transform( -3.97781, -0.0491465, 6.07623, -0.805746, -6.06373, -0.715056, 5.44934, -0.932466, 4.32968, -49.2252, 0.784297, 8.70646 )
 mesh = SubResource( 6 )
 material/0 = null
 material/1 = null

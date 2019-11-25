@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://VR_Controller.gd" type="Script" id=1]
-[ext_resource path="res://Hand_Left.scn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Hand_Left.scn" type="PackedScene" id=2]
 [ext_resource path="res://Assets_Material.tres" type="Material" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
