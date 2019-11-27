@@ -286,7 +286,7 @@ surfaces/1 = {
 [sub_resource type="BoxShape" id=6]
 
 [node name="Floor1" type="StaticBody"]
-transform = Transform( 0.000173184, 0.00525116, 0.499972, -0.013428, 0.499792, -0.00524462, -0.49982, -0.0134254, 0.000314137, 11.593, -8.3, 4.221 )
+transform = Transform( 0.000173184, 0.00525116, 0.499972, -0.00330295, 0.499961, -0.00524991, -0.499989, -0.00330092, 0.000207859, 11.593, 0.0954618, 4.221 )
 
 [node name="Cube040" type="MeshInstance" parent="."]
 transform = Transform( -3.98563, -0.125774, 6.06834, -0.473335, -6.10267, -0.567069, 5.48253, -0.618309, 4.36254, -49.2252, 0.784297, 8.70646 )
@@ -295,5 +295,5 @@ material/0 = null
 material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 80, 0, 0, 0, 10, 0, 0, 0, 80, 0, 3.50014, 0 )
+transform = Transform( 80, 2.5332e-007, -2.23517e-008, -3.57628e-007, 10, -7.53949e-007, -2.23517e-008, 9.21264e-008, 80, -0.0349998, 3.5, -0.0039978 )
 shape = SubResource( 6 )

@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/left_hand.obj-35fb55631736b947c9628cb16fd3cccc.mesh"
+
+[deps]
+
+files=[ "res://.import/left_hand.obj-35fb55631736b947c9628cb16fd3cccc.mesh" ]
+
+source_file="res://Meshes/left_hand.obj"
+dest_files=[ "res://.import/left_hand.obj-35fb55631736b947c9628cb16fd3cccc.mesh", "res://.import/left_hand.obj-35fb55631736b947c9628cb16fd3cccc.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 0.01, 0.01, 0.01 )
+optimize_mesh=true

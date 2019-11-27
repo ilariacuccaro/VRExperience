@@ -34,8 +34,9 @@ func enter(body):
 	else:
 		print("Collision whith: ", body.get_name())
 
-#func _physics_process(delta):
-#	print(self.transform.translated(Vector3()))
+func _physics_process(delta):
+	print(self.transform.translated(Vector3()))
+	print($ARVROrigin/ARVRCamera.transform.translated(Vector3()))
 #	if(move):
 #		while(r < 2.2):
 #				rotate_object_local(Vector3(1,0,0),0.05499499)

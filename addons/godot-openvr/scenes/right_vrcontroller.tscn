@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/godot-openvr/scenes/ovr_controller.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Hand_Right.scn" type="PackedScene" id=2]
+[ext_resource path="res://Function_pointer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/vr-common/functions/Function_Direct_movement.tscn" type="PackedScene" id=4]
+
+[node name="OVRController" type="ARVRController"]
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 0, 0 )
+script = ExtResource( 1 )
+
+[node name="Hand_Right" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1.18945, 0, 0, 0, -5.19923e-008, -1.18945, 0, 1.18945, -5.19923e-008, 0, 1, 0 )
+
+[node name="Function_pointer" parent="." instance=ExtResource( 3 )]
+
+[node name="Function_Direct_movement" parent="." instance=ExtResource( 4 )]

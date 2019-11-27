@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/vr-common/functions/Function_Direct_movement.gd" type="Script" id=1]
 
@@ -6,12 +6,19 @@
 radius = 0.3
 height = 1.2
 
+[sub_resource type="CapsuleMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_transparent = true
+albedo_color = Color( 0.6, 0, 0, 0.611765 )
+
 [node name="Function_Direct_movement" type="Node"]
 script = ExtResource( 1 )
 max_speed = 500.0
 
 [node name="KinematicBody" type="KinematicBody" parent="."]
-collision_mask = 1048574
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0.9, 0 )
@@ -22,3 +29,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 enabled = true
 cast_to = Vector3( 0, -0.6, 0 )
 collision_mask = 1048575
+
+[node name="MeshInstance" type="MeshInstance" parent="KinematicBody"]
+transform = Transform( 0.3, 0, 0, 0, -1.31134e-008, -0.6, 0, 0.3, -2.62268e-008, 0, 0.9, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )

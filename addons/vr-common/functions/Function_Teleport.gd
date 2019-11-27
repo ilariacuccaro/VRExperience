@@ -1,7 +1,4 @@
 extends KinematicBody
-# should really change this to Spatial once #17401 is resolved
-
-# Add this scene as a sub scene of your ARVRController node to implement a teleport function on that controller.
 
 # button 15 is mapped to our trigger
 export var teleport_button = 15
@@ -11,8 +8,8 @@ export (Color) var no_collision_color = Color(45.0 / 255.0, 80.0 / 255.0, 220.0 
 export var player_height = 1.8 setget set_player_height, get_player_height
 export var player_radius = 0.4 setget set_player_radius, get_player_radius
 export var strength = 5.0
-# once this is no longer a kinematic body, we'll need this..
-# export var collision_mask = 1
+# se il nodo è Spatial
+#export var collision_mask = 1
 
 onready var ws = ARVRServer.world_scale
 var origin_node = null
