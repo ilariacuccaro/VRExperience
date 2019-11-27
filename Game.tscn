@@ -246,11 +246,11 @@ material/0 = null
 shape = SubResource( 3 )
 
 [node name="Floor1" parent="World" instance=ExtResource( 2 )]
-transform = Transform( 0.000171159, 0.00524693, 0.499964, -0.0134281, 0.499839, -0.00684381, -0.499875, -0.00931318, 0.000282572, 11.5926, -8.2996, 4.22115 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3133, -10.0688, 4.00873 )
 
 [node name="Platformer" type="KinematicBody" parent="World"]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 9.30902, -1.80228, -16.2049 )
+transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, 9.30902, -1.27577, -16.2049 )
 script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="World/Platformer"]
@@ -317,7 +317,7 @@ mesh = SubResource( 14 )
 material/0 = SubResource( 16 )
 
 [node name="Player" parent="." instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.36617, 0.0837893, 4.87581 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.36618, 0.232697, 4.87581 )
 [connection signal="stopP" from="World/Floor2/StaticBody" to="World/Platformer" method="_on_Platform_stopP"]
 [connection signal="moveB" from="Player" to="World/Bridge" method="on_Player_bridge"]
 [connection signal="moveP" from="Player" to="World/Platformer" method="_on_Player_moveP"]
