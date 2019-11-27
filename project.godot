@@ -22,6 +22,14 @@ run/main_scene="res://Game.tscn"
 
 singletons=[ "res://addons/godot-openvr/godot_openvr.gdnlib" ]
 
+[layer_names]
+
+3d_physics/layer_1="Player"
+3d_physics/layer_2="Floor1"
+3d_physics/layer_3="Platform"
+3d_physics/layer_4="Floor2"
+3d_physics/layer_5="Bridge"
+
 [rendering]
 
 threads/thread_model=2

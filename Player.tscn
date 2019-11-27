@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Right_Controller.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Left_Controller.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Movement_Vignette.tscn" type="PackedScene" id=4]
+
+[sub_resource type="BoxShape" id=1]
+
+[node name="Player" type="RigidBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0 )
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1.8, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="ARVROrigin" type="ARVROrigin" parent="."]
+
+[node name="Player_Camera" type="ARVRCamera" parent="ARVROrigin"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0 )
+
+[node name="Right_Controller" parent="ARVROrigin" instance=ExtResource( 2 )]
+
+[node name="Left_Controller" parent="ARVROrigin" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 0.977416, -0.211325, 0, 0.211325, 0.977416, 0, 1, 0 )
+
+[node name="Movement_Vignette" parent="ARVROrigin" instance=ExtResource( 4 )]
+visible = false

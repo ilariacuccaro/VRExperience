@@ -41,6 +41,7 @@ flags_unshaded = true
 albedo_color = Color( 0.667298, 1, 0.460938, 0.431373 )
 
 [node name="Left_Controller" type="ARVRController"]
+transform = Transform( 1, 0, 0, 0, 0.977416, -0.211325, 0, 0.211325, 0.977416, 0, 1, 0 )
 controller_id = 1
 script = ExtResource( 1 )
 
