@@ -22,6 +22,13 @@ run/main_scene="res://Game.tscn"
 
 singletons=[ "res://addons/godot-openvr/godot_openvr.gdnlib" ]
 
+[physics]
+
+2d/physics_engine="GodotPhysics"
+3d/physics_engine="GodotPhysics"
+2d/thread_model=2
+2d/sleep_threshold_linear=0.1
+
 [rendering]
 
 threads/thread_model=2
