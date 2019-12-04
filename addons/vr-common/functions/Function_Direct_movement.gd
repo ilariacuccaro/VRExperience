@@ -14,8 +14,6 @@ export var max_speed = 5.0
 export var drag_factor = 0.1
 
 var turn_step = 0.0
-var origin_node = null
-var camera_node = null
 var velocity = Vector3(0.0, 0.0, 0.0)
 var gravity = -30.0
 onready var collision_shape = get_node("KinematicBody/CollisionShape")
@@ -43,19 +41,29 @@ func set_player_radius(p_radius):
 		collision_shape.shape.radius = player_radius
 
 func _ready():
-	origin_node = get_node("../..")
-	camera_node = get_node("../../ARVRCamera")
-	
 	set_player_height(player_height)
 	set_player_radius(player_radius)
 
 func _physics_process(delta):
+	if !origin:
+		return
+	
+	var arvr_camera = null
+	if camera:
+		arvr_camera = get_node(camera)
+	else:
+		arvr_camera = 	get_viewport().get_camera()
+	
+	if !arvr_camera:
+		return;
+	
 	var controller = get_parent()
 	if controller.get_is_active():
 		var left_right = controller.get_joystick_axis(0)
 		var forwards_backwards = controller.get_joystick_axis(1)
 		
 		################################################################
+		#al primo controllo non dovremmo aver problemi
 		if (abs(left_right) > 0.1):
 			if left_right > 0.0:
 				if turn_step < 0.0:
@@ -69,13 +77,13 @@ func _physics_process(delta):
 				turn_step += left_right * delta
 		
 			if abs(turn_step) > turn_delay:
-				# ruotiamo attorno alla nostra telecamera, ma regoliamo la nostra origine
+				#ruotiamo attorno la nostra telecamera, regoliamo la nostra origine
 				var t1 = Transform()
 				var t2 = Transform()
 				var rot = Transform()
 			
-				t1.origin = -camera_node.transform.origin
-				t2.origin = camera_node.transform.origin
+				t1.origin = -arvr_camera.transform.origin
+				t2.origin = arvr_camera.transform.origin
 			
 				# rotazione
 				while abs(turn_step) > turn_delay:
@@ -85,25 +93,25 @@ func _physics_process(delta):
 					else:
 						rot = rot.rotated(Vector3(0.0,1.0,0.0),turn_angle * PI / 180.0)
 						turn_step += turn_delay
-			
-				origin_node.transform *= t2 * rot * t1
+				
+				get_node(origin).transform *= t2 * rot * t1
 		else:
 			turn_step = 0.0
 		
 		################################################################
-		# ora facciamo il nostro movimento
-		# Iniziamo posizionando il nostro KinematicBody nel posto giusto centrandolo sulla telecamera ma posizionandolo a terra
+		# iniziamo il nostro movimento
+		# posizioniamo il nostro KinematicBody nel posto giusto centrandolo sulla telecamera ma posizionandolo a terra 
 		var new_transform = $KinematicBody.global_transform
-		var camera_transform = camera_node.global_transform
+		var camera_transform = arvr_camera.global_transform
 		new_transform.origin = camera_transform.origin
-		new_transform.origin.y = origin_node.global_transform.origin.y
+		new_transform.origin.y = get_node(origin).global_transform.origin.y
 		$KinematicBody.global_transform = new_transform
 		
-		# gestiremo la gravità separatamente
+		# gestiamo la gravità separatamente
 		var gravity_velocity = Vector3(0.0, velocity.y, 0.0)
 		velocity.y = 0.0
 		
-		# appica la nostra resistenza
+		# applichiamo la resistenza
 		velocity *= (1.0 - drag_factor)
 		
 		if (abs(forwards_backwards) > 0.1 and tail.is_colliding()):
@@ -113,20 +121,16 @@ func _physics_process(delta):
 			velocity = dir.normalized() * -forwards_backwards * delta * max_speed * ARVRServer.world_scale
 #			velocity = velocity.linear_interpolate(dir, delta * 100.0)
 		
-		# applichiamo move and slide al nostro kinematic body
 		velocity = $KinematicBody.move_and_slide(velocity, Vector3(0.0, 1.0, 0.0))
 		
-		# applichiamo la gravità
 		gravity_velocity.y += gravity * delta
 		gravity_velocity = $KinematicBody.move_and_slide(gravity_velocity, Vector3(0.0, 1.0, 0.0))
 		velocity.y = gravity_velocity.y
 		
-		#ora usa la nostra nuova posizione per spostare il nostro punto di origine
+		# usiamo la nostra nuova posizione per spostare il nostro punto di origine
 		var movement = ($KinematicBody.global_transform.origin - new_transform.origin)
-		origin_node.global_transform.origin += movement
+		get_node(origin).global_transform.origin += movement
 		
-		# Riportiamolo dove era in modo che possiamo usare la sua forma di collisione anche per altre cose
 		$KinematicBody.global_transform.origin = new_transform.origin
 		
-		# Non possiamo usare move_and_collide perché stiamo spostando indirettamente il nostro centro e quindi il nostro corpo cinematico
-		# origin_node.translation -= dir.normalized() * delta * forwards_backwards * max_speed * ARVRServer.world_scale;
+		# get_node(origin).translation -= dir.normalized() * delta * forwards_backwards * max_speed * ARVRServer.world_scale;

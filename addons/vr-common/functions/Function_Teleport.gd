@@ -8,10 +8,7 @@ export var player_height = 1.8 setget set_player_height, get_player_height
 export var player_radius = 0.4 setget set_player_radius, get_player_radius
 export var strength = 5.0
 
-# export var collision_mask = 1 in caso di nodo spaziale
-
 onready var ws = ARVRServer.world_scale
-var origin_node = null
 var is_on_floor = true
 var is_teleporting = false
 var can_teleport = true
@@ -53,8 +50,6 @@ func set_player_radius(p_radius):
 			capsule.mesh.radius = player_radius
 
 func _ready():
-	# E il suo genitore dovrebbe essere il nostro punto di origine
-	origin_node = get_node("../..")
 
 	# Il teleport è inattivo quando iniziamo
 	$Teleport.visible = false
@@ -62,7 +57,6 @@ func _ready():
 	
 	$Teleport.mesh.size = Vector2(0.05 * ws, 1.0)
 	$Target.mesh.size = Vector2(ws, ws)
-	$Target/Player_figure.scale = Vector3(ws, ws, ws)
 	
 	# creiamo un oggetto Capsule
 	collision_shape = CapsuleShape.new()
@@ -81,7 +75,6 @@ func _physics_process(delta):
 		ws = new_ws
 		$Teleport.mesh.size = Vector2(0.05 * ws, 1.0)
 		$Target.mesh.size = Vector2(ws, ws)
-		$Target/Player_figure.scale = Vector3(ws, ws, ws)
 	
 	# il pulsante 15 è associato al nostro trigger
 	if controller and controller.get_is_active() and controller.is_button_pressed(15):
@@ -207,28 +200,19 @@ func _physics_process(delta):
 	elif is_teleporting:
 		if can_teleport:
 			
-			# rendiamo di nuovo orizzontale il nostro target
+			ARVRServer.center_on_hmd(true, true)
+			
+			# make our target horizontal again
 			var new_transform = last_target_transform
 			new_transform.basis.y = Vector3(0.0, 1.0, 0.0)
-			new_transform.basis.x = new_transform.basis.y.cross(new_transform.basis.z).normalized()
-			new_transform.basis.z = new_transform.basis.x.cross(new_transform.basis.y).normalized()
+			new_transform.basis.x = new_transform.basis.y.cross(new_transform.basis.z)
+			new_transform.basis.z = new_transform.basis.x.cross(new_transform.basis.y)
 			
-			# troviamo la trasformazione dei piedi dei nostri utenti
-			var camera_node = origin_node.get_node("ARVRCamera")
-			var cam_transform = camera_node.transform
-			var user_feet_transform = Transform()
-			user_feet_transform.origin = cam_transform.origin
-			user_feet_transform.origin.y = 0 # i piedi sono a terra, ma hanno la stessa X, Z della telecamera
-			
-			# ci assicuriamo che la trasformazione sia corretta
-			user_feet_transform.basis.y = Vector3(0.0, 1.0, 0.0)
-			user_feet_transform.basis.x = user_feet_transform.basis.y.cross(cam_transform.basis.z).normalized()
-			user_feet_transform.basis.z = user_feet_transform.basis.x.cross(user_feet_transform.basis.y).normalized()
-			
-			# ora spostiamo l'origine
-			origin_node.global_transform = new_transform * user_feet_transform.inverse()
+			# and change our location
+			if origin:
+				get_node(origin).global_transform = new_transform
 		
-		# e disabilitiamo il teleport
+		# and disable
 		is_teleporting = false;
 		$Teleport.visible = false
 		$Target.visible = false
