@@ -283,7 +283,7 @@ surfaces/1 = {
 "vertex_count": 4
 }
 
-[sub_resource type="PlaneShape" id=6]
+[sub_resource type="BoxShape" id=6]
 
 [node name="Floor1" type="StaticBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.22643, 0 )
@@ -295,5 +295,5 @@ material/0 = null
 material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 4.5, 0, 0, 0, 1, 0, 0, 0, 4.5, 0, 8.55042, 0 )
+transform = Transform( 55, 0, 0, 0, 7, 0, 0, 0, 55, 0, 2.86407, 0 )
 shape = SubResource( 6 )

@@ -217,6 +217,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.47574, 0 )
 
 [node name="Floor1" parent="World" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2013, -9.67991, 2.98427 )
+collision_mask = 4
 
 [node name="Platformer" type="KinematicBody" parent="World"]
 editor/display_folded = true
@@ -238,13 +239,13 @@ material/0 = ExtResource( 6 )
 anims/MovingP = SubResource( 5 )
 
 [node name="Floor2" type="MeshInstance" parent="World"]
-editor/display_folded = true
 transform = Transform( 8.326, 0, 0, 0, 0.2, 0, 0, 0, 13, 6.38096, 19.4202, -2.42136 )
 mesh = SubResource( 6 )
 material/0 = SubResource( 7 )
 
 [node name="StaticBody" type="RigidBody" parent="World/Floor2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.06, 0, 0, 0.0733801 )
+collision_mask = 4
 mode = 1
 physics_material_override = SubResource( 8 )
 contact_monitor = true
@@ -295,9 +296,8 @@ nodes/node_b = NodePath("../Bridge")
 environment = ExtResource( 11 )
 
 [node name="Player" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.51834, -0.498112, 5.84132 )
-collision_layer = 1023
-collision_mask = 1023
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.51836, 1.00061, -0.95245 )
+collision_layer = 4
 continuous_cd = true
 contacts_reported = 5
 contact_monitor = true
@@ -310,9 +310,25 @@ shape = SubResource( 12 )
 [node name="ARVROrigin" parent="Player" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.548709, 0 )
 
+[node name="ARVRCamera" parent="Player/ARVROrigin" index="0"]
+transform = Transform( 0.87522, 0, 0, 0, 1, 0, 0, 0, 0.832903, 0, 1.8, 0 )
+
+[node name="Left_Hand" parent="Player/ARVROrigin" index="1"]
+editor/display_folded = false
+
+[node name="Function_Teleport" parent="Player/ARVROrigin/Left_Hand" index="0"]
+collision_layer = 4
+
+[node name="HUD_Anchor" parent="Player/ARVROrigin" index="3"]
+editor/display_folded = true
+
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 autostart = true
 [connection signal="stopP" from="World/Floor2/StaticBody" to="World/Platformer" method="_on_Platform_stopP"]
 [connection signal="moveP" from="Player" to="World/Platformer" method="_on_Player_moveP"]
 [connection signal="timeout" from="Timer" to="World/Bridge" method="_on_Timer_timeout"]
+
+[editable path="World/Floor1"]
+
+[editable path="Player/ARVROrigin"]

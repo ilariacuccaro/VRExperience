@@ -48,8 +48,8 @@ script = SubResource( 3 )
 
 [node name="Left_Hand" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.25, 0 )
+controller_id = 1
 
 [node name="Right_Hand" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.25, 0 )
 controller_id = 2
-
