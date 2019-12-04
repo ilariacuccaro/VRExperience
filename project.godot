@@ -22,6 +22,18 @@ run/main_scene="res://Game.tscn"
 
 singletons=[ "res://addons/godot-openvr/godot_openvr.gdnlib" ]
 
+[layer_names]
+
+3d_render/layer_1=false
+3d_physics/layer_1=false
+3d_render/layer_2=false
+3d_physics/layer_2=false
+3d_render/layer_3=false
+3d_physics/layer_3=false
+3d_render/layer_4=false
+3d_physics/layer_4=false
+3d_render/floor=""
+
 [physics]
 
 2d/physics_engine="GodotPhysics"
