@@ -24,20 +24,18 @@ singletons=[ "res://addons/godot-openvr/godot_openvr.gdnlib" ]
 
 [layer_names]
 
-3d_render/layer_1=false
-3d_physics/layer_1=false
-3d_render/layer_2=false
-3d_physics/layer_2=false
-3d_render/layer_3=false
-3d_physics/layer_3=false
-3d_render/layer_4=false
-3d_physics/layer_4=false
-3d_render/floor=""
+3d_render/layer_1="floor"
+3d_physics/layer_1="floor"
+3d_render/layer_2="platform"
+3d_physics/layer_2="platform"
+3d_render/layer_3="player"
+3d_physics/layer_3="player"
+3d_render/layer_4="bridge"
+3d_physics/layer_4="bridge"
 
 [physics]
 
 2d/physics_engine="GodotPhysics"
-3d/physics_engine="GodotPhysics"
 2d/thread_model=2
 2d/sleep_threshold_linear=0.1
 

@@ -3,11 +3,7 @@ extends RigidBody
 signal moveP
 signal moveB
 signal notmoveB
-var r = 0
-var state
-var current_transform
-var target_position
-#var bridge = load("res://Bridge4.tscn") 
+#var bridge = load("res://Bridge.tscn") 
 #var node = bridge.instance()
 #var CollS
 
@@ -22,10 +18,10 @@ func _ready():
 
 func enter(body):
 	if body.get_name() == "Platformer":
-		print("collision with platform", body.get_name())
+		print("collision with ", body.get_name())
 		emit_signal("moveP")
 	elif body.get_name() == "Bridge":
-		print("collision with a bridge / ", body.get_name())
+		print("collision with a ", body.get_name())
 		emit_signal("moveB")
 	elif body.get_name() == "Board":
 		print("enter on boards", body.get_name())
@@ -33,11 +29,7 @@ func enter(body):
 		print("Collision whith: ", body.get_name())
 
 
-func _integrate_forces(state):
-	pass
-
 func exit(body):
 	if body.get_name() == "Bridge":
 		print("exit from bridge")
 		emit_signal("notmoveB")
-		

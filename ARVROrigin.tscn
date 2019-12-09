@@ -22,9 +22,7 @@ cull_mask = 1048571
 [node name="vr_common_shader_cache" parent="ARVRCamera" instance=ExtResource( 1 )]
 
 [node name="Left_Hand" type="ARVRController" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1.2, 0 )
-controller_id = 1
 
 [node name="Function_Teleport" parent="Left_Hand" instance=ExtResource( 2 )]
 
@@ -38,6 +36,7 @@ material/0 = ExtResource( 4 )
 transform = Transform( -0.469846, 0.0584889, 0.160697, 0, 0.469846, -0.17101, -0.17101, -0.160697, -0.441511, -0.0114244, 0.00402093, -0.0289563 )
 
 [node name="Right_Hand" type="ARVRController" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.2, 0 )
 controller_id = 2
 
