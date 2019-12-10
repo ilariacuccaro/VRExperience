@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/pillars.escn-09c2ff81084e4bafb91f1e485a972ada.scn"
+path="res://.import/BridgeFinal2.escn-3bd723685dbf6fcade504af175b6daaf.scn"
 
 [deps]
 
-source_file="res://pillars.escn"
-dest_files=[ "res://.import/pillars.escn-09c2ff81084e4bafb91f1e485a972ada.scn" ]
+source_file="res://BridgeFinal2.escn"
+dest_files=[ "res://.import/BridgeFinal2.escn-3bd723685dbf6fcade504af175b6daaf.scn" ]
 
 [params]
 

@@ -9,7 +9,7 @@ func on_Player_bridge():
 	timer.start()
 
 func _on_Timer_timeout() -> void:
-	apply_torque_impulse(Vector3(0.6,0,0))
+	apply_torque_impulse(Vector3(0.9,0,0))
 
 func exit_Player_bridge():
 	print("Player exit from bridge")

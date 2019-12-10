@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=2]
 
-[ext_resource path="res://lava_albedo6.png" type="Texture" id=1]
+[ext_resource path="res://lava_albedo.png" type="Texture" id=1]
 [ext_resource path="res://foam_alpha_R.png" type="Texture" id=2]
 [ext_resource path="res://generic_water.png" type="Texture" id=3]
 

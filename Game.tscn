@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Lava.tscn" type="PackedScene" id=2]
@@ -8,10 +8,11 @@
 [ext_resource path="res://Default OBJ.material" type="Material" id=6]
 [ext_resource path="res://Floor2.gd" type="Script" id=7]
 [ext_resource path="res://Bridge.tscn" type="PackedScene" id=8]
-[ext_resource path="res://pillars.tscn" type="PackedScene" id=9]
-[ext_resource path="res://default_env.tres" type="Environment" id=10]
-[ext_resource path="res://Player.gd" type="Script" id=11]
-[ext_resource path="res://ARVROrigin.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Bridge.gd" type="Script" id=9]
+[ext_resource path="res://Pillars.tscn" type="PackedScene" id=10]
+[ext_resource path="res://default_env.tres" type="Environment" id=11]
+[ext_resource path="res://Player.gd" type="Script" id=12]
+[ext_resource path="res://ARVROrigin.tscn" type="PackedScene" id=13]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -197,24 +198,24 @@ collision_mask = 4
 
 [node name="Platformer" type="KinematicBody" parent="World"]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1.3, 0, 0, 0, 1, 9.309, -0.855, -16.2641 )
+transform = Transform( 1, 0, 0, 0, 1.3, 0, 0, 0, 1, 7.5028, -0.855, -20.3383 )
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="World/Platformer"]
-transform = Transform( 1.05, 0, 0, 0, 0.11, 0, 0, 0, 1.05, 0, 0, 0.0127277 )
+transform = Transform( 1.11, 0, 0, 0, 0.11, 0, 0, 0, 1.13, 0, 0, 0.0124321 )
 shape = SubResource( 1 )
 
 [node name="MeshPlatformer" type="MeshInstance" parent="World/Platformer"]
-transform = Transform( 1, 0, 0, 0, 0.09, 0, 0, 0, 1, 0, 0, 0 )
+transform = Transform( 1.1, 0, 0, 0, 0.09, 0, 0, 0, 1.1, 0, 0, 0 )
 layers = 2
 mesh = SubResource( 4 )
 material/0 = ExtResource( 6 )
 
 [node name="Floor2" type="MeshInstance" parent="World"]
 editor/display_folded = true
-transform = Transform( 11, 0, 0, 0, 0.2, 0, 0, 0, 16, 8.29358, 19.541, 0.873383 )
+transform = Transform( 11, 0, 0, 0, 0.2, 0, 0, 0, 17, 6.64127, 19.541, -2.08876 )
 mesh = SubResource( 5 )
 material/0 = SubResource( 6 )
 
@@ -232,7 +233,7 @@ shape = SubResource( 8 )
 
 [node name="Floor3" type="MeshInstance" parent="World"]
 editor/display_folded = true
-transform = Transform( 11, 0, 0, 0, 0.2, 0, 0, 0, 20, 49.5217, 19.5758, -0.977994 )
+transform = Transform( 11, 0, 0, 0, 0.2, 0, 0, 0, 20, 47.7155, 19.5758, -3.94014 )
 mesh = SubResource( 5 )
 material/0 = SubResource( 6 )
 
@@ -242,36 +243,37 @@ material/0 = SubResource( 6 )
 shape = SubResource( 8 )
 
 [node name="Bridge" parent="World" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 0.999658, 0.026177, 0, -0.026177, 0.999658, 28.9241, 22.7692, 10.0043 )
+transform = Transform( 1, 0, 0, 0, 0.99978, 0.0209424, 0, -0.0209424, 0.999782, 27.1644, 20.8663, 7.58086 )
 collision_layer = 8
 collision_mask = 4
-gravity_scale = 1.5
 contacts_reported = 1
+script = ExtResource( 9 )
 
 [node name="StaticBodyBridge" type="StaticBody" parent="World"]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28.9236, 23.9474, 10.0043 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 27.007, 23.9474, 7.51706 )
 collision_layer = 8
 collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="World/StaticBodyBridge"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0811872, 0.59598, -0.0269055 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0811844, 0.59598, -0.0269051 )
 shape = SubResource( 9 )
 disabled = true
 
 [node name="HingeJoint" type="HingeJoint" parent="World"]
-transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 28.9236, 23.9474, 10.0043 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 27.007, 23.9474, 7.51706 )
 nodes/node_a = NodePath("../StaticBodyBridge")
 nodes/node_b = NodePath("../Bridge")
 
-[node name="Pillars" parent="World" instance=ExtResource( 9 )]
-transform = Transform( 0.97, 0, 0, 0, 1.13, 0, 0, 0, 0.92, 28.877, 20.677, 9.98759 )
+[node name="Pillars" parent="World" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 27.1898, 21.042, 7.59186 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 10 )
+environment = ExtResource( 11 )
 
 [node name="Player" type="RigidBody" parent="."]
-transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 21.2578, 20.9083, 10.0019 )
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0763, -0.106888, 4.08164 )
 collision_layer = 4
 collision_mask = 11
 mass = 0.3
@@ -279,21 +281,21 @@ gravity_scale = 0.5
 continuous_cd = true
 contacts_reported = 5
 contact_monitor = true
-script = ExtResource( 11 )
+script = ExtResource( 12 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
-transform = Transform( 0.8, 0, 3.55271e-015, 0, 1.15, 0, -3.55271e-015, 0, 0.8, 0.130209, 0.613355, 0 )
+transform = Transform( 0.8, 0, 3.55271e-015, 0, 1.15, 0, -3.55271e-015, 0, 0.8, 0, 0.613, 0 )
 shape = SubResource( 10 )
 
-[node name="ARVROrigin" parent="Player" instance=ExtResource( 12 )]
+[node name="ARVROrigin" parent="Player" instance=ExtResource( 13 )]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.548709, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.57733, 0 )
 
 [node name="ARVRCamera" parent="Player/ARVROrigin" index="0"]
 transform = Transform( 0.87522, 0, 0, 0, 1, 0, 0, 0, 0.832903, 0, 1.8, 0 )
 
-[node name="Function_Teleport" parent="Player/ARVROrigin/Left_Hand" index="0"]
-collision_layer = 4
+[node name="Left_Hand" parent="Player/ARVROrigin" index="1"]
+editor/display_folded = true
 
 [node name="HUD_Anchor" parent="Player/ARVROrigin" index="3"]
 editor/display_folded = true

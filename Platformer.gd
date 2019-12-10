@@ -1,7 +1,7 @@
 extends KinematicBody
 
 var vel = Vector3()
-var force = 9.81*10
+var force = 9.8*10
 var pos = Vector3(0,1,0)
 var move = false
 

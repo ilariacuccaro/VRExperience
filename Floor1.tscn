@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Texture-Surface_Stones.jpg.001.jpg" type="Texture" id=1]
+[ext_resource path="res://Texture_Stones.jpg" type="Texture" id=1]
 
 [sub_resource type="Shader" id=1]
 resource_name = "Shader Nodetree"
